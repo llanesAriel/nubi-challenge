@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEY=secret123
+    volumes:
+      - ./app:/app
+
+  test:
+    build: .
+    environment:
+      - API_KEY=secret123
+    volumes:
+      - ./app:/app
+      - ./tests:/tests
+    restart: "no"
+    profiles:
+      - test
+    command: ["pytest", "--disable-warnings", "-v"]
