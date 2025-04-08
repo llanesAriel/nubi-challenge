@@ -44,7 +44,9 @@ class InMemoryUserRepository(UserRepository):
             logger.info("Initial data already loaded. Skipping.")
             return
         try:
-            response = requests.get("https://nubi-challenge.wiremockapi.cloud/users")
+            response = requests.get(
+                "https://nubi-challenge.wiremockapi.cloud/users"
+            )
             response.raise_for_status()
             users_data = response.json()
 
@@ -52,7 +54,7 @@ class InMemoryUserRepository(UserRepository):
                 user = User(
                     id=self.next_id,
                     name=user_data["name"],
-                    email=user_data["email"]
+                    email=user_data["email"],
                 )
                 self.users.append(user)
                 self.next_id += 1
@@ -60,4 +62,6 @@ class InMemoryUserRepository(UserRepository):
             logger.info(f"Loaded {len(self.users)} users from mock API.")
 
         except Exception as e:
-            logger.warning(f"Could not fetch initial users. Starting with empty repository. Error: {e}")
+            logger.warning(
+                f"Could not fetch initial users. Starting with empty repository. Error: {e}"
+            )

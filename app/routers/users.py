@@ -6,9 +6,7 @@ from security.auth import get_current_user
 
 
 router = APIRouter(
-    prefix="/users",
-    tags=["users"],
-    dependencies=[Depends(get_current_user)]
+    prefix="/users", tags=["users"], dependencies=[Depends(get_current_user)]
 )
 repository = InMemoryUserRepository()
 user_service = UserService(repository)
