@@ -1,0 +1,109 @@
+{
+    "info": {
+      "name": "Nubi Challenge API",
+      "_postman_id": "nubi-challenge-api-collection",
+      "description": "Collection for Nubi Challenge Python SR API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Get all users",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "secret123",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/users/",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["users", ""]
+          }
+        }
+      },
+      {
+        "name": "Create user",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "secret123",
+              "type": "text"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8000/users/",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["users", ""]
+          }
+        }
+      },
+      {
+        "name": "Update user",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "secret123",
+              "type": "text"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"John Updated\",\n  \"email\": \"john.updated@example.com\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8000/users/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["users", "1"]
+          }
+        }
+      },
+      {
+        "name": "Delete user",
+        "request": {
+          "method": "DELETE",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "secret123",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/users/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["users", "1"]
+          }
+        }
+      }
+    ]
+  }
+  
