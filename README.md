@@ -24,7 +24,7 @@ http://localhost:8000
 ### 2. Ejecutar los tests unitarios
 
 ```bash
-docker-compose --profile test up
+docker compose --profile test run --rm test
 ```
 
 Esto construirá la imagen si es necesario y ejecutará los tests con Pytest dentro del contenedor.
