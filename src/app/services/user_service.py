@@ -1,12 +1,11 @@
-from app.repositories import UserRepository, PostgresqlUserRepository
-from app.models.user import UserCreate, UserUpdate
-from sqlalchemy.orm import Session
-from app.models.user import User
-from app.models.query_params import UserQueryParams
-from typing import List
-from app.core.config import settings
 import logging
+from typing import List
 
+from app.core.config import settings
+from app.models.query_params import UserQueryParams
+from app.models.user import User, UserCreate, UserUpdate
+from app.repositories import PostgresqlUserRepository, UserRepository
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,9 @@ class UserService:
         elif settings.REPOSITORY_TYPE == "memory":
             repository = UserRepository()
         else:
-            raise ValueError(f"Invalid repository type: {settings.REPOSITORY_TYPE}")
+            raise ValueError(
+                f"Invalid repository type: {settings.REPOSITORY_TYPE}"
+            )
         return cls(repository)
 
     async def list_users(self, params: UserQueryParams) -> List[User]:

@@ -1,8 +1,10 @@
-from fastapi import FastAPI
-from app.routers import users
-from app.database.config import init_db
 from contextlib import asynccontextmanager
 from os import getenv
+
+from fastapi import FastAPI
+
+from app.database.config import init_db
+from app.routers import users
 
 
 @asynccontextmanager

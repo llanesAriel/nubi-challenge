@@ -1,9 +1,8 @@
-from app.models.user import PGUser, UserCreate
-from datetime import date
-from faker import Faker
+from datetime import date, datetime
 from uuid import uuid4
-from datetime import datetime
 
+from app.models.user import PGUser, UserCreate
+from faker import Faker
 
 fake = Faker()
 
@@ -19,7 +18,7 @@ class UserFactory:
             "sex_type": fake.random_element(elements=("male", "female")),
             "dni": str(fake.random_number(digits=8)),
             "birth_date": fake.date_of_birth(minimum_age=18, maximum_age=100),
-            "created_at": date.today()
+            "created_at": date.today(),
         }
         data.update(overrides)
         return PGUser(**data)
@@ -33,11 +32,10 @@ class UserFactory:
             "sex_type": fake.random_element(elements=("male", "female")),
             "dni": str(fake.random_number(digits=8)),
             "birth_date": fake.date_of_birth(
-                minimum_age=18,
-                maximum_age=100
+                minimum_age=18, maximum_age=100
             ).isoformat(),
             "created_at": datetime.now(),
-            "wallet_id": str(uuid4())
+            "wallet_id": str(uuid4()),
         }
         data.update(overrides)
         return UserCreate(**data)

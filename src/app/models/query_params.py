@@ -1,5 +1,6 @@
-from typing import Optional, Dict
 from enum import Enum
+from typing import Dict, Optional
+
 from pydantic import BaseModel, Field
 
 

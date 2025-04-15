@@ -1,8 +1,8 @@
 import pytest
-from app.services.user_service import UserService
+from app.models.query_params import SortDirection, UserQueryParams
 from app.repositories.in_memory import InMemoryUserRepository
+from app.services.user_service import UserService
 from tests.factories.user_factory import UserFactory
-from app.models.query_params import UserQueryParams, SortDirection
 
 
 @pytest.fixture
@@ -12,7 +12,7 @@ def default_user_query_params():
         limit=10,
         sortBy=None,
         sortDirection=SortDirection.ascending,
-        match={}
+        match={},
     )
 
 
@@ -36,14 +36,14 @@ async def test_list_users_returns_all_created_users(
 
 @pytest.mark.asyncio
 async def test_filter_users_by_email_returns_exact_match(
-        service_with_users,
-        default_user_query_params,
+    service_with_users,
+    default_user_query_params,
 ):
     users = await service_with_users.list_users(default_user_query_params)
     target_user = users[0]
-    filtered_params = default_user_query_params.model_copy(update={
-        "match": {"email": target_user.email}
-    })
+    filtered_params = default_user_query_params.model_copy(
+        update={"match": {"email": target_user.email}}
+    )
 
     filtered_users = await service_with_users.list_users(filtered_params)
     assert len(filtered_users) == 1

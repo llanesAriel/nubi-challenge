@@ -1,10 +1,11 @@
-from sqlalchemy.orm import Session
-from app.models.user import UserCreate, UserUpdate, User, PGUser
-from sqlalchemy import desc, asc
-from sqlalchemy.future import select
-from typing import List, Dict, Any
 import logging
+from typing import Any, Dict, List
 
+from sqlalchemy import asc, desc
+from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+
+from app.models.user import PGUser, UserCreate, UserUpdate
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,9 @@ class PostgresqlUserRepository:
         sort_col = getattr(PGUser, sort_field, None)
         if sort_col is not None:
             stmt = stmt.order_by(
-                asc(sort_col) if sort_direction == "ascending" else desc(sort_col)
+                asc(sort_col)
+                if sort_direction == "ascending"
+                else desc(sort_col)
             )
 
         stmt = stmt.offset(skip).limit(limit)
@@ -51,7 +54,9 @@ class PostgresqlUserRepository:
         await self.db.refresh(db_user)
         return db_user
 
-    async def update_user(self, user_id: int, user_update: UserUpdate) -> PGUser | None:
+    async def update_user(
+        self, user_id: int, user_update: UserUpdate
+    ) -> PGUser | None:
         db_user = self.db.query(PGUser).filter(PGUser.id == user_id).first()
         if db_user:
             for key, value in user_update.dict(exclude_unset=True).items():

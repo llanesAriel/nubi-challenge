@@ -1,9 +1,9 @@
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import declarative_base
 from datetime import datetime
 from uuid import UUID
-from datetime import date
+
+from pydantic import BaseModel, ConfigDict
+from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy.orm import declarative_base
 
 
 class User(BaseModel):
@@ -27,7 +27,7 @@ class UserUpdate(User):
 
 
 class PGUser(declarative_base()):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     wallet_id = Column(String, unique=True, index=True)

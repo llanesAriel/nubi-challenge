@@ -1,8 +1,9 @@
-from typing import List, Dict, Any
-from .base import UserRepository
-from app.models.user import User, UserCreate, UserUpdate
 import logging
+from typing import Any, Dict, List
 
+from app.models.user import User, UserCreate, UserUpdate
+
+from .base import UserRepository
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,8 @@ class InMemoryUserRepository(UserRepository):
         if filters:
             for field, value in filters.items():
                 users = [
-                    u for u in users
+                    u
+                    for u in users
                     if getattr(u, field, "").lower() == value.lower()
                 ]
 
@@ -36,13 +38,13 @@ class InMemoryUserRepository(UserRepository):
                 users = sorted(
                     users,
                     key=lambda u: getattr(u, sort_field),
-                    reverse=(sort_direction == "descending")
+                    reverse=(sort_direction == "descending"),
                 )
             except AttributeError:
                 pass  # Si el campo no existe, ignoramos el ordenamiento
 
         # Paginación
-        return users[skip: skip + limit]
+        return users[skip : skip + limit]
 
     async def create_user(self, user_create: UserCreate) -> User:
         user = User(id=self.next_id, **user_create.model_dump())
@@ -53,7 +55,9 @@ class InMemoryUserRepository(UserRepository):
     async def update_user(self, user_id: int, user_update: UserUpdate) -> User:
         for user in self.users:
             if user.id == user_id:
-                for field, value in user_update.model_dump(exclude_unset=True).items():
+                for field, value in user_update.model_dump(
+                    exclude_unset=True
+                ).items():
                     setattr(user, field, value)
                 return user
         raise ValueError("User not found")

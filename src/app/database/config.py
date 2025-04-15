@@ -1,13 +1,13 @@
-from sqlalchemy import create_engine, MetaData, text
-from sqlalchemy.orm import sessionmaker, declarative_base
+import logging
+from typing import AsyncGenerator
+
+import requests
+from app.core.config import settings
+from app.models.user import PGUser as User
+from sqlalchemy import MetaData, create_engine, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from app.models.user import PGUser as User
-from app.core.config import settings
-from typing import AsyncGenerator
-import logging
-import requests
-
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 logging.basicConfig()
 logger = logging.getLogger("sqlalchemy.engine")
@@ -22,8 +22,9 @@ base = declarative_base()
 
 async def init_db():
     """
-    Initializes the database by checking if the 'users' table exists. If it doesn't,
-    the table is created and mock user data is imported from an external API.
+    Initializes the database by checking if the 'users' table exists.
+    If it doesn't, the table is created and mock user data is imported
+    from an external API.
     """
 
     # Create the table if it doesn't exist
@@ -36,10 +37,16 @@ async def init_db():
     with engine.connect() as connection:
         try:
             # Attempt to fetch users from the table to check if it exists
-            result = connection.execute(text("SELECT to_regclass('public.users')"))
+            result = connection.execute(
+                text("SELECT to_regclass('public.users')")
+            )
             if result.fetchone()[0] is None:
-                logger.info("The 'users' table does not exist, creating the table...")
-                User.metadata.create_all(bind=engine)  # Create the 'users' table
+                logger.info(
+                    "The 'users' table does not exist, creating the table..."
+                )
+                User.metadata.create_all(
+                    bind=engine
+                )  # Create the 'users' table
 
                 # Once the table is created, import mock data
                 logger.info("Importing mock data...")
@@ -50,12 +57,19 @@ async def init_db():
                     users_data = response.json()
                     db = SessionLocal()
                     for user_data in users_data:
-                        user = User(**user_data)  # Make sure the keys match your User model
+                        user = User(
+                            **user_data
+                        )  # Make sure the keys match your User model
                         db.add(user)
                     db.commit()
-                    logger.info(f"{len(users_data)} users imported successfully.")
+                    logger.info(
+                        f"{len(users_data)} users imported successfully."
+                    )
                 else:
-                    logger.warning(f"Error fetching mock data. Status code: {response.status_code}")
+                    logger.warning(
+                        "Error fetching mock data."
+                        f"Status code: {response.status_code}"
+                    )
             else:
                 logger.info("The 'users' table already exists.")
         except OperationalError as e:
