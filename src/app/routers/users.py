@@ -1,21 +1,21 @@
-from fastapi import APIRouter, Depends
+import logging
 from typing import List
-from app.models.user import User, UserCreate, UserUpdate
-from app.models.query_params import UserQueryParams
-from app.core.security.auth import get_current_user
-from app.services.user_service import UserService
+
+from app.core.security.auth import validate_api_key
 from app.dependencies.query_params import (
     get_user_query_params,
     get_user_service,
 )
-import logging
-
+from app.models.query_params import UserQueryParams
+from app.models.user import User, UserCreate, UserUpdate
+from app.services.user_service import UserService
+from fastapi import APIRouter, Depends
 
 logger = logging.getLogger(__name__)
 
 
 router = APIRouter(
-    prefix="/users", tags=["users"], dependencies=[Depends(get_current_user)]
+    prefix="/users", tags=["users"], dependencies=[Depends(validate_api_key)]
 )
 
 

@@ -12,8 +12,8 @@
           "method": "GET",
           "header": [
             {
-              "key": "Authorization",
-              "value": "secret123",
+              "key": "NUBI-API-KEY",
+              "value": "SecretNubi",
               "type": "text"
             }
           ],
@@ -32,8 +32,8 @@
           "method": "POST",
           "header": [
             {
-              "key": "Authorization",
-              "value": "secret123",
+              "key": "NUBI-API-KEY",
+              "value": "SecretNubi",
               "type": "text"
             },
             {
@@ -61,8 +61,8 @@
           "method": "PUT",
           "header": [
             {
-              "key": "Authorization",
-              "value": "secret123",
+              "key": "NUBI-API-KEY",
+              "value": "SecretNubi",
               "type": "text"
             },
             {
@@ -90,8 +90,8 @@
           "method": "DELETE",
           "header": [
             {
-              "key": "Authorization",
-              "value": "secret123",
+              "key": "NUBI-API-KEY",
+              "value": "SecretNubi",
               "type": "text"
             }
           ],

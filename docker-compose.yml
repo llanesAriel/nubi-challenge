@@ -22,7 +22,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - API_KEY=secret123
+      - API_KEY=SecretNubi
       - DATABASE_URL=postgresql+psycopg://test_user:test_password@db:5432/db
       - REPOSITORY_TYPE=pgsql
       - ENV=development
