@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 
-from app.database.config import get_db
+from app.core.database.config import get_db
 from app.models.query_params import SortDirection, UserQueryParams
 from app.services.user_service import UserService
 from fastapi import Depends, HTTPException, Query

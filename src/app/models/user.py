@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from app.database.config import base
+from app.core.database.config import base
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.dialects.postgresql import UUID as SA_UUID

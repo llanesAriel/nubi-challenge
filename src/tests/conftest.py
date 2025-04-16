@@ -1,7 +1,7 @@
 import pytest
 import pytest_asyncio
 from app.core.config import settings
-from app.database.config import base
+from app.core.database.config import base
 from app.repositories.postgresql import PostgresqlUserRepository
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine

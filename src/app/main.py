@@ -3,7 +3,7 @@ from os import getenv
 
 from fastapi import FastAPI
 
-from app.database.init import init_db
+from app.core.database.init import init_db
 from app.routers import users
 
 
@@ -15,7 +15,12 @@ async def lifespan(app: FastAPI):
         yield
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    title="Nubi Challenge API",
+    description="API para gestionar usuarios",
+    version="1.0.0",
+    lifespan=lifespan,
+)
 app.include_router(users.router)
 
 
