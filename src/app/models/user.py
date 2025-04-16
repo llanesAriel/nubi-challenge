@@ -1,9 +1,9 @@
 from datetime import datetime
 from uuid import UUID
 
+from app.database.config import base
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import Column, DateTime, Integer, String
-from sqlalchemy.orm import declarative_base
 
 
 class User(BaseModel):
@@ -26,7 +26,7 @@ class UserUpdate(User):
     pass
 
 
-class PGUser(declarative_base()):
+class PGUser(base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

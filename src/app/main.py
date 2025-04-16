@@ -3,7 +3,7 @@ from os import getenv
 
 from fastapi import FastAPI
 
-from app.database.config import init_db
+from app.database.init import init_db
 from app.routers import users
 
 

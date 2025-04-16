@@ -34,7 +34,9 @@ services:
     restart: unless-stopped
 
   test:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.local
     environment:
       - API_KEY=secret123
       - DATABASE_URL=postgresql+psycopg://test_user:test_password@db:5432/test_db
@@ -49,5 +51,8 @@ services:
     entrypoint: []
     profiles: ["test"]
     command: pytest tests -v
+    depends_on:
+      db:
+        condition: service_healthy
 volumes:
   postgres_data:

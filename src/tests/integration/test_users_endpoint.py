@@ -1,3 +1,5 @@
+from os import getenv
+
 import pytest
 from app.dependencies.query_params import get_user_service
 from app.main import app
@@ -6,8 +8,8 @@ from app.services.user_service import UserService
 from httpx import ASGITransport, AsyncClient
 from tests.factories.user_factory import UserFactory
 
-API_KEY = "secret123"
-HEADERS = {"Authorization": API_KEY}
+API_KEY = getenv("API-Key", "secret123")
+HEADERS = {"NUBI-API-KEY": API_KEY}
 
 
 @pytest.fixture(scope="function")
