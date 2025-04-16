@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from uuid import uuid4
 
-from app.models.user import PGUser, UserCreate
+from app.models.user import UserCreate, UserORM
 from faker import Faker
 
 fake = Faker()
@@ -9,7 +9,7 @@ fake = Faker()
 
 class UserFactory:
     @staticmethod
-    def create_pg_user(**overrides) -> PGUser:
+    def create_pg_user(**overrides) -> UserORM:
         data = {
             "wallet_id": str(uuid4()),
             "email": fake.email(),
@@ -21,7 +21,7 @@ class UserFactory:
             "created_at": date.today(),
         }
         data.update(overrides)
-        return PGUser(**data)
+        return UserORM(**data)
 
     @staticmethod
     def create_user(**overrides) -> UserCreate:

@@ -2,7 +2,7 @@ import logging
 
 import requests
 from app.core.config import settings
-from app.models.user import PGUser as User
+from app.models.user import UserORM as User
 from sqlalchemy import MetaData, create_engine, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker

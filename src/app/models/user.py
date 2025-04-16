@@ -13,6 +13,7 @@ class BaseUser(BaseModel):
 
 
 class User(BaseUser):
+    id: int
     email: str
     name: str
     last_name: str
@@ -41,7 +42,7 @@ class UserUpdate(BaseModel):
     birth_date: Optional[datetime] = None
 
 
-class PGUser(base):
+class UserORM(base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
