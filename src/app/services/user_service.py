@@ -54,7 +54,7 @@ class UserService:
             )
 
         # Check if the email already exists
-        existing = await self.repository.get_user_by_email(user_create.email)
+        existing = await self.repository.get_by_email(user_create.email)
         if existing:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,

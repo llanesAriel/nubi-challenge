@@ -43,6 +43,16 @@ class InMemoryUserRepository(UserRepository):
 
         return users[skip : skip + limit]
 
+    async def get_by_email(self, wallet_id):
+        for user in self.users:
+            if user.email == wallet_id:
+                return user
+
+    async def get_by_wallet_id(self, wallet_id):
+        for user in self.users:
+            if user.wallet_id == wallet_id:
+                return user
+
     async def create_user(self, user_create: UserCreate) -> User:
         user = User(id=self.next_id, **user_create.model_dump())
         self.users.append(user)

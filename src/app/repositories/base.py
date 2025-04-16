@@ -24,3 +24,7 @@ class UserRepository(ABC):
     @abstractmethod
     async def get_by_wallet_id(self, wallet_id: str) -> Optional[User]:
         pass
+
+    @abstractmethod
+    async def get_by_email(self, wallet_id: str) -> Optional[User]:
+        pass

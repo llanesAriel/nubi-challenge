@@ -44,7 +44,7 @@ class PostgresqlUserRepository:
         result = await self.db.execute(stmt)
         return result.scalars().all()
 
-    async def get_user_by_email(self, user_email: str) -> PGUser | None:
+    async def get_by_email(self, user_email: str) -> PGUser | None:
         result = await self.db.execute(
             select(PGUser).where(PGUser.email == user_email)
         )
