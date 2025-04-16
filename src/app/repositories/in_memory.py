@@ -23,7 +23,6 @@ class InMemoryUserRepository(UserRepository):
     ) -> List[User]:
         users = self.users
 
-        # Filtro simple
         if filters:
             for field, value in filters.items():
                 users = [
@@ -32,7 +31,6 @@ class InMemoryUserRepository(UserRepository):
                     if getattr(u, field, "").lower() == value.lower()
                 ]
 
-        # Ordenamiento
         if sort_field:
             try:
                 users = sorted(
@@ -41,9 +39,8 @@ class InMemoryUserRepository(UserRepository):
                     reverse=(sort_direction == "descending"),
                 )
             except AttributeError:
-                pass  # Si el campo no existe, ignoramos el ordenamiento
+                pass
 
-        # Paginación
         return users[skip : skip + limit]
 
     async def create_user(self, user_create: UserCreate) -> User:
