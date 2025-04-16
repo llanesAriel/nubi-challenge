@@ -48,3 +48,6 @@ La mejor práctica es instalar herramientas de desarrollo usando `pipx`, para ma
 ```bash
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
+
+```bash
+pipx install pre-commit
