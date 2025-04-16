@@ -1,11 +1,8 @@
 fastapi
 uvicorn
-pytest
-pytest-asyncio
 httpx
 pydantic[email]
 email-validator
 requests
-faker
 psycopg[binary]
 sqlalchemy[postgresql]

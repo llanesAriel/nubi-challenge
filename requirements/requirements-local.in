@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+httpx
+pydantic[email]
+email-validator
+requests
+psycopg[binary]
+sqlalchemy[postgresql]
+
+## Local development
+pytest
+pytest-asyncio
+faker

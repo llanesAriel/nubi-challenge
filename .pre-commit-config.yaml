@@ -5,3 +5,14 @@ repos:
       - id: ruff
         args: ["--fix"]
       - id: ruff-format
+  - repo: https://github.com/jazzband/pip-tools
+    rev: 7.4.1
+    hooks:
+      - id: pip-compile
+        name: pip-compile requirements-dev.in
+        files: ^requirements/requirements-dev\.in$
+        args: [--output-file=requirements/requirements-dev.txt, requirements/requirements-dev.in, --upgrade]
+      - id: pip-compile
+        name: pip-compile requirements-local.in
+        files: ^requirements/requirements-local\.in$
+        args: [--output-file=requirements/requirements-local.txt, requirements/requirements-local.in, --upgrade]

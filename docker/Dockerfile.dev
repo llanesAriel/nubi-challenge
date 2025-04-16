@@ -1,20 +1,18 @@
-FROM python:3.13.10-slim
+FROM python:3.13.10-alpine
 
 RUN apk add --no-cache \
-    libpq-dev \
     gcc \
     musl-dev \
+    libpq \
     postgresql-dev \
     python3-dev \
-    build-base \
-    linux-headers \
     libffi-dev \
-    openssl-dev
+    openssl-dev \
+    cargo
 
 WORKDIR /var/www
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements/requirements-dev.txt .
+RUN pip install --no-cache-dir -r requirements-dev.txt
 
 COPY src/app ./app
 
