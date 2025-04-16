@@ -1,36 +1,53 @@
+import uuid
 from datetime import datetime
-from uuid import UUID
+from typing import Optional
 
 from app.database.config import base
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy.dialects.postgresql import UUID as SA_UUID
 
 
-class User(BaseModel):
+class BaseUser(BaseModel):
+    created_at: datetime
+
+
+class User(BaseUser):
     email: str
     name: str
     last_name: str
     sex_type: str
     dni: str
     birth_date: datetime
-    wallet_id: UUID
-    created_at: datetime
+    wallet_id: uuid.UUID
     model_config = ConfigDict(from_attributes=True)
 
 
-class UserCreate(User):
-    pass
+class UserCreate(BaseModel):
+    email: str
+    name: str
+    last_name: str
+    sex_type: str
+    dni: str
+    birth_date: datetime
+    wallet_id: uuid.UUID
 
 
-class UserUpdate(User):
-    pass
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    last_name: Optional[str] = None
+    sex_type: Optional[str] = None
+    dni: Optional[str] = None
+    birth_date: Optional[datetime] = None
 
 
 class PGUser(base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    wallet_id = Column(String, unique=True, index=True)
+    wallet_id = Column(
+        SA_UUID(as_uuid=True), unique=True, index=True, default=uuid.uuid4
+    )
     email = Column(String, unique=True, index=True)
     name = Column(String)
     last_name = Column(String)

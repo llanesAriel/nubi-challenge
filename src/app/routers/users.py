@@ -28,26 +28,29 @@ async def list_users(
 
 
 @router.post("/", response_model=User)
-def create_user(
+async def create_user(
     user: UserCreate,
     user_service: UserService = Depends(get_user_service),
 ):
-    return user_service.create_user(user)
+    return await user_service.create_user(user)
 
 
-@router.put("/{user_id}", response_model=User)
-def update_user(
-    user_id: int,
+@router.put("/{user_email}", response_model=User)
+async def update_user(
+    user_email: str,
     user: UserUpdate,
     user_service: UserService = Depends(get_user_service),
 ):
-    return user_service.update_user(user_id, user)
+    return await user_service.update_user(user_email, user)
 
 
-@router.delete("/{user_id}")
-def delete_user(
-    user_id: int,
+@router.delete("/{user_email}")
+async def delete_user(
+    user_email: str,
     user_service: UserService = Depends(get_user_service),
 ):
-    user_service.delete_user(user_id)
+    user = await user_service.delete_user(user_email)
+    if not user:
+        logger.error(f"User with email {user_email} not found.")
+        return {"message": "User not found"}
     return {"message": "User deleted successfully"}

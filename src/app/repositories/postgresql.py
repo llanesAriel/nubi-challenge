@@ -44,8 +44,17 @@ class PostgresqlUserRepository:
         result = await self.db.execute(stmt)
         return result.scalars().all()
 
-    def get_user_by_id(self, user_id: int) -> PGUser | None:
-        return self.db.query(PGUser).filter(PGUser.id == user_id).first()
+    async def get_user_by_email(self, user_email: str) -> PGUser | None:
+        result = await self.db.execute(
+            select(PGUser).where(PGUser.email == user_email)
+        )
+        return result.scalar_one_or_none()
+
+    async def get_by_wallet_id(self, wallet_id: str) -> PGUser | None:
+        result = await self.db.execute(
+            select(PGUser).where(PGUser.wallet_id == wallet_id)
+        )
+        return result.scalar_one_or_none()
 
     async def create_user(self, user_create: UserCreate) -> PGUser:
         db_user = PGUser(**user_create.model_dump())
@@ -55,9 +64,11 @@ class PostgresqlUserRepository:
         return db_user
 
     async def update_user(
-        self, user_id: int, user_update: UserUpdate
+        self, user_email: str, user_update: UserUpdate
     ) -> PGUser | None:
-        db_user = self.db.query(PGUser).filter(PGUser.id == user_id).first()
+        stmt = select(PGUser).where(PGUser.email == user_email)
+        result = await self.db.execute(stmt)
+        db_user = result.scalar_one_or_none()
         if db_user:
             for key, value in user_update.dict(exclude_unset=True).items():
                 setattr(db_user, key, value)
@@ -65,8 +76,10 @@ class PostgresqlUserRepository:
             await self.db.refresh(db_user)
         return db_user
 
-    async def delete_user(self, user_id: int) -> PGUser | None:
-        db_user = self.db.query(PGUser).filter(PGUser.id == user_id).first()
+    async def delete_user(self, user_email: str) -> PGUser | None:
+        stmt = select(PGUser).where(PGUser.email == user_email)
+        result = await self.db.execute(stmt)
+        db_user = result.scalar_one_or_none()
         if db_user:
             await self.db.delete(db_user)
             await self.db.commit()
